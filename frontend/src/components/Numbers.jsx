@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import '/Users/connorzupan/Documents/GitHub/Sudoku/frontend/src/styles/sudokuBoard.css'; // Importiere die CSS-Datei
+import '/Users/connorzupan/Documents/GitHub/Sudoku/frontend/src/components/Numbers.css';
 
-export default function Board({ missingCount, onCheckSolution }) {
+export default function Numbers({ missingCount, onCheckSolution, isDarkMode }) {
     const [puzzle, setPuzzle] = useState([]);
     const [solution, setSolution] = useState([]);
     const [inputValues, setInputValues] = useState([]);
@@ -38,15 +38,15 @@ export default function Board({ missingCount, onCheckSolution }) {
 
     return (
         <div>
-            <div className="sudokuBoard">
+            <div className={`sudokuBoard ${isDarkMode ? 'dark-mode' : ''}`}>
                 {puzzle.map((row, rowIndex) => (
-                    <div key={rowIndex} className="sudokuRow">
+                    <div key={rowIndex} className={`sudokuRow ${isDarkMode ? 'dark-mode' : ''}`}>
                         {row.map((number, colIndex) => (
-                            <div key={colIndex} className="sudokuCell">
+                            <div key={colIndex} className={`sudokuCell ${isDarkMode ? 'dark-mode' : ''}`}>
                                 {number === null ? (
                                     <input
                                         type="text"
-                                        className="sudokuInput"
+                                        className={`sudokuInput ${isDarkMode ? 'dark-mode' : ''}`}
                                         value={inputValues[rowIndex][colIndex] || ""}
                                         onChange={(e) => handleChange(rowIndex, colIndex, e.target.value)}
                                     />
@@ -58,7 +58,7 @@ export default function Board({ missingCount, onCheckSolution }) {
                     </div>
                 ))}
             </div>
-            <div style={{ textAlign: 'center', marginTop: '20px' }}>
+            <div>
                 <button className="checkSolutionButton" onClick={checkSolution}>
                     Lösung überprüfen
                 </button>

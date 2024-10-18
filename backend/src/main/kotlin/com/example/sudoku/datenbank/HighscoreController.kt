@@ -28,5 +28,4 @@ class HighscoreController(private val service: HighscoreService) {
     fun deleteHighscoreById(@PathVariable id: Long) {
         service.deleteHighscore(id)
     }
-
 }

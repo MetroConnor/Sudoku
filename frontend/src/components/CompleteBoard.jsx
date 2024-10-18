@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import Board from './Board';
-import '/Users/connorzupan/Documents/GitHub/Sudoku/frontend/src/styles/sudokuBoard.css';
+import Numbers from './Numbers';
+import '/Users/connorzupan/Documents/GitHub/Sudoku/frontend/src/components/CompleteBoard.css';
+import HighscoreList from "./ShowHighscore";
 
 export default function CompleteBoard() {
     const [missingCount, setMissingCount] = useState(0); // Zustand für die Anzahl der fehlenden Zahlen
@@ -8,6 +9,7 @@ export default function CompleteBoard() {
     const [isTimerActive, setIsTimerActive] = useState(false);
     const [username, setUsername] = useState('');
     const [isGameFinished, setIsGameFinished] = useState(false);
+    const [isDarkMode, setIsDarkMode] = useState(false);
 
     useEffect(() => {
         let timer;
@@ -20,6 +22,23 @@ export default function CompleteBoard() {
             clearInterval(timer);
         }
     }, [isTimerActive]);
+
+    useEffect(() => {
+        if (isDarkMode) {
+            document.body.classList.add('dark-mode');
+        } else {
+            document.body.classList.remove('dark-mode');
+        }
+
+        // Cleanup Funktion, um die Klasse zu entfernen, falls der Component unmounted wird
+        return () => {
+            document.body.classList.remove('dark-mode');
+        };
+    }, [isDarkMode]);
+
+    const toggleDarkMode = () => {
+        setIsDarkMode(!isDarkMode);
+    };
 
     const setDifficulty = (difficulty) => {
         switch (difficulty) {
@@ -54,7 +73,7 @@ export default function CompleteBoard() {
         const highscoreData = {
             username: username,
             completionTime: time,
-            difficultyLevel: missingCount === 30 ? 'easy' : missingCount === 40 ? 'medium' : 'hard'
+            difficultyLevel: missingCount === 30 ? 'Leicht' : missingCount === 40 ? 'Mittel' : 'Schwer'
         };
 
         fetch('http://localhost:8080/api/highscore', {
@@ -78,32 +97,49 @@ export default function CompleteBoard() {
     }
 
     return (
-        <div>
-            <h1>Sudoku Spiel</h1>
-            <div className="difficultyButtons">
-                <button onClick={() => setDifficulty('easy')}>Leicht</button>
-                <button onClick={() => setDifficulty('medium')}>Mittel</button>
-                <button onClick={() => setDifficulty('hard')}>Schwer</button>
-            </div>
-
-            <div className="timer">
-                <h2>Highscore {Math.floor(time / 60)}:{time % 60 < 10 ? `0${time % 60}` : time % 60}</h2>
-            </div>
-
-            <Board missingCount={missingCount} onCheckSolution={handleStopTimer} />
-
-            {/* Eingabefeld und Button nach Abschluss des Spiels */}
-            {isGameFinished && (
-                <div>
-                    <input
-                        type="text"
-                        placeholder="Benutzername"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                    />
-                    <button onClick={handleSubmitHighscore}>Highscore speichern</button>
+        <div className={`container ${isDarkMode ? 'dark-mode' : 'light-mode'}`}>
+            <div className={`column ${isDarkMode ? 'dark-mode' : 'light-mode'}`}>
+                <div className="Highscores">
+                    <HighscoreList isDarkMode={isDarkMode} />
                 </div>
-            )}
+            </div>
+            <div className="column">
+                <h1>Sudoku Spiel</h1>
+                <div className="timer">
+                    <h2>{Math.floor(time / 60)}:{time % 60 < 10 ? `0${time % 60}` : time % 60}</h2>
+                </div>
+
+                <Numbers missingCount={missingCount} onCheckSolution={handleStopTimer} isDarkMode={isDarkMode} />
+
+                {isGameFinished && (
+                    <div className="inputField">
+                        <input
+                            className="input"
+                            type="text"
+                            placeholder="Benutzername"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                        />
+                        <button className="ButtonInput" onClick={handleSubmitHighscore}>Speichern</button>
+                    </div>
+                )}
+            </div>
+            <div className="column">
+                <div className="difficultyButtons">
+                    <div>
+                        <button onClick={() => setDifficulty('easy')}>Leicht</button>
+                    </div>
+                    <div>
+                        <button onClick={() => setDifficulty('medium')}>Mittel</button>
+                    </div>
+                    <div>
+                        <button onClick={() => setDifficulty('hard')}>Schwer</button>
+                    </div>
+                </div>
+                <button className={`toggleModeButton ${isDarkMode ? 'dark-mode' : 'light-mode'}`} onClick={toggleDarkMode}>
+                    {isDarkMode ? 'Light Mode' : 'Dark Mode'}
+                </button>
+            </div>
         </div>
     );
 }
