@@ -35,19 +35,20 @@
 
 /* Darkmode for Numbers */
 .sudokuBoard.dark-mode {
-    background-color: #333;
     border-color: #888;
+    background-color: #1f1f1f;
 }
 
 .sudokuCell.dark-mode {
-    background-color: #444;
-    color: white;
+    background-color: #424242;
+    color: #ffffff;
+    border-color: #888;
 }
 
 .sudokuInput.dark-mode {
-    background-color: #666;
-    color: white;
-    border: 1px solid #888;
+    background-color: #4a4a4a;
+    color: #ffffff;
+    border-color: #888;
 }
 
 .sudokuCell.dark-mode:nth-child(3) {

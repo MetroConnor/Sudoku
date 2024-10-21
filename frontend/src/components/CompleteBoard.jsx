@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Numbers from './Numbers';
-import '/Users/connorzupan/Documents/GitHub/Sudoku/frontend/src/components/CompleteBoard.css';
+import './CompleteBoard.css'
 import HighscoreList from "./ShowHighscore";
 
 export default function CompleteBoard() {
@@ -61,7 +61,9 @@ export default function CompleteBoard() {
 
     const handleStopTimer = () => {
         setIsTimerActive(false);
+        if(time > 0){
         setIsGameFinished(true);
+        }
     }
 
     const handleSubmitHighscore = () => {

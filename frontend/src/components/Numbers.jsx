@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import '/Users/connorzupan/Documents/GitHub/Sudoku/frontend/src/components/Numbers.css';
+import './Numbers.css';
 
 export default function Numbers({ missingCount, onCheckSolution, isDarkMode }) {
     const [puzzle, setPuzzle] = useState([]);
@@ -26,7 +26,7 @@ export default function Numbers({ missingCount, onCheckSolution, isDarkMode }) {
     const checkSolution = () => {
         for (let row = 0; row < puzzle.length; row++) {
             for (let col = 0; col < puzzle[row].length; col++) {
-                if (inputValues[row][col] !== null && inputValues[row][col] !== solution[row][col]) {
+                if (inputValues[row][col] !== solution[row][col]) {
                     alert(`Fehler in Zeile ${row + 1}, Spalte ${col + 1}`);
                     return;
                 }

@@ -118,23 +118,6 @@ body.dark-mode {
     color: #ffffff;
 }
 
-.sudokuBoard.dark-mode {
-    border-color: #888;
-    background-color: #1f1f1f;
-}
-
-.sudokuCell.dark-mode {
-    background-color: #3a3a3a;
-    color: #ffffff;
-    border-color: #888;
-}
-
-.sudokuInput.dark-mode {
-    background-color: #4a4a4a;
-    color: #ffffff;
-    border-color: #888;
-}
-
 .timer.dark-mode {
     color: #ffffff;
 }
