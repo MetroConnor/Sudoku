@@ -30,7 +30,6 @@ export default function CompleteBoard() {
             document.body.classList.remove('dark-mode');
         }
 
-        // Cleanup Funktion, um die Klasse zu entfernen, falls der Component unmounted wird
         return () => {
             document.body.classList.remove('dark-mode');
         };

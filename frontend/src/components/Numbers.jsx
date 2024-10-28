@@ -12,10 +12,10 @@ export default function Numbers({ missingCount, onCheckSolution, isDarkMode }) {
             .then(data => {
                 setPuzzle(data.puzzle);
                 setSolution(data.solution);
-                setInputValues(data.puzzle.map(row => row.map(num => num)));  // Initialisiere die Eingabewerte
+                setInputValues(data.puzzle.map(row => row.map(num => num)));
             })
             .catch(error => console.error('Fehler beim Abrufen des Sudoku-Puzzles', error));
-    }, [missingCount]);  // Der Effekt wird erneut ausgeführt, wenn missingCount geändert wird
+    }, [missingCount]);
 
     const handleChange = (rowIndex, colIndex, value) => {
         const newInputValues = [...inputValues];
@@ -27,7 +27,7 @@ export default function Numbers({ missingCount, onCheckSolution, isDarkMode }) {
         for (let row = 0; row < puzzle.length; row++) {
             for (let col = 0; col < puzzle[row].length; col++) {
                 if (inputValues[row][col] !== solution[row][col]) {
-                    alert(`Fehler in Zeile ${row + 1}, Spalte ${col + 1}`);
+                    alert(`Fehler in Spalte ${row + 1}, Zeile ${col + 1}`);
                     return;
                 }
             }
